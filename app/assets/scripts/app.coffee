@@ -1,0 +1,4 @@
+welcome = require "welcome"
+
+$ ->
+  welcome()

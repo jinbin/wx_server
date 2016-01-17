@@ -1,0 +1,28 @@
+source 'https://ruby.taobao.org/'
+
+gem "rake"
+gem "sqlite3"
+gem "slim", "~> 2.0.1"
+gem "sinatra", "~> 1.4.3"
+gem "sinatra-contrib", "~> 1.4.1"
+gem "sinatra-activerecord", "~> 1.2.3"
+gem 'grape'
+
+# If you want to use mail
+# gem "pony"
+
+group :development do
+  gem "therubyracer", "~> 0.12.0"
+  gem "linner", "~> 0.7", require: false
+end
+
+group :production do
+  gem "puma"
+end
+
+group :test do
+  gem "pry"
+  gem "rack-test"
+  gem "factory_girl"
+  gem "database_cleaner"
+end

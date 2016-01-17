@@ -1,0 +1,38 @@
+paths:
+  app: "app/assets"
+  public: "public"
+groups:
+  scripts:
+    paths:
+      - app/assets/scripts
+    concat:
+      "/assets/app.js": "{app/assets/scripts,vendor}/**/*.{js,coffee}"
+    order:
+      - "vendor/jquery.js"
+      - "..."
+      - "app/scripts/app.coffee"
+  styles:
+    paths:
+      - app/assets/styles
+    concat:
+      "/assets/app.css": "{app/assets/styles,vendor}/**/[a-z]*.{css,scss,sass}"
+  images:
+    paths:
+      - app/assets/images
+    sprite:
+      "../app/assets/styles/icons.scss": "app/assets/images/**/*.png"
+modules:
+  wrapper: "cmd"
+  ignored: "vendor/**/*"
+  definition: "/assets/app.js"
+sprites:
+  selector: ".icon-"
+  path: "/assets/images/"
+  url: "/assets/images/"
+revision:
+  manifest: manifest.yml
+notification: true
+bundles:
+  jquery.js:
+    version: 1.11.0
+    url: http://code.jquery.com/jquery-1.11.0.js
