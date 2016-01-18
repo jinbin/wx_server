@@ -5,31 +5,34 @@ require 'digest'
 class Application < Grape::API
 
   Token = "wxtoken18658863627"
+  TEST_Token = "testwxtoken18658863627"
 
-  get '/' do 
-    signature = params[:signature]
-    timestamp = params[:timestamp]
-    nonce = params[:nonce]
-    echostr = params[:echostr]
+  resource :wx do
 
-    puts "signature: #{signature}"
-    puts "timestamp: #{timestamp}"
-    puts "nonce: #{nonce}"
-    puts "echostr: #{echostr}"
+    get '/' do 
+      signature = params[:signature]
+      timestamp = params[:timestamp]
+      nonce = params[:nonce]
+      echostr = params[:echostr]
 
-    if signature.nil? || timestamp.nil? || nonce.nil? || echostr.nil?
-      return "<p>error</p>"
+      puts "signature: #{signature}\n" + "timestamp: #{timestamp}\n" + "nonce: #{nonce}\n" + "echostr: #{echostr}"
+
+      account = Account.new Token
+      account.check_wx_legality signature, timestamp, nonce, echostr
     end
 
-    # 将Token, timestamp, nonce进行字典序排序
-    array = [Token, timestamp, nonce].sort
-    # 将三个参数字符串拼接成一个字符串进行sha1加密, 与signature进行比较
+    get "/test" do 
+      signature = params[:signature]
+      timestamp = params[:timestamp]
+      nonce = params[:nonce]
+      echostr = params[:echostr]
 
-    if signature == Digest::SHA1.hexdigest(array.join)
-      return echostr
-    else 
-      return "<p>error</p>"
+      puts "signature: #{signature}\n" + "timestamp: #{timestamp}\n" + "nonce: #{nonce}\n" + "echostr: #{echostr}"
+
+      account = Account.new TEST_Token
+      account.check_wx_legality signature, timestamp, nonce, echostr
     end
+
   end
 
   get "/test" do
